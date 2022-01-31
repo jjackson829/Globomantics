@@ -1,0 +1,317 @@
+services:
+  globomantics.api:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: Globomantics.Api/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: Globomantics.Api
+      target: base
+    container_name: Globomantics.Api
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      ASPNETCORE_URLS: http://*:5006
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages;/root/.nuget/fallbackpackages2;/root/.nuget/fallbackpackages3
+    image: globomanticsapi:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages --additionalProbingPath
+        /root/.nuget/fallbackpackages2 --additionalProbingPath /root/.nuget/fallbackpackages3  "/app/bin/Debug/net5.0/Globomantics.Api.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 5006
+      published: 5006
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: C:\Users\Jere\source\repos\Globomantics\Globomantics.Api
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\source\repos\Globomantics
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+      target: /root/.nuget/fallbackpackages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft\Xamarin\NuGet\
+      target: /root/.nuget/fallbackpackages2
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files\dotnet\sdk\NuGetFallbackFolder
+      target: /root/.nuget/fallbackpackages3
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  globomantics.identityserver:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: Globomantics.IdentityServer/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: Globomantics.IdentityServer
+      target: base
+    container_name: Globomantics.IdentityServer
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      ASPNETCORE_URLS: http://*:5000
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages;/root/.nuget/fallbackpackages2;/root/.nuget/fallbackpackages3
+    image: globomanticsidentityserver:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages --additionalProbingPath
+        /root/.nuget/fallbackpackages2 --additionalProbingPath /root/.nuget/fallbackpackages3  "/app/bin/Debug/net5.0/Globomantics.IdentityServer.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 5000
+      published: 5000
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: C:\Users\Jere\source\repos\Globomantics\Globomantics.IdentityServer
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\source\repos\Globomantics
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+      target: /root/.nuget/fallbackpackages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft\Xamarin\NuGet\
+      target: /root/.nuget/fallbackpackages2
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files\dotnet\sdk\NuGetFallbackFolder
+      target: /root/.nuget/fallbackpackages3
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  globomantics.ui:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: Globomantics.Core/Dockerfile
+      labels:
+        com.microsoft.created-by: visual-studio
+        com.microsoft.visual-studio.project-name: Globomantics.Core
+      target: base
+    container_name: Globomantics.Core
+    entrypoint:
+    - tail
+    - -f
+    - /dev/null
+    environment:
+      ASPNETCORE_LOGGING__CONSOLE__DISABLECOLORS: "true"
+      ASPNETCORE_URLS: http://*:5005
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      NUGET_FALLBACK_PACKAGES: /root/.nuget/fallbackpackages;/root/.nuget/fallbackpackages2;/root/.nuget/fallbackpackages3
+    image: globomanticsui:dev
+    labels:
+      com.microsoft.visualstudio.debuggee.arguments: ' --additionalProbingPath /root/.nuget/packages
+        --additionalProbingPath /root/.nuget/fallbackpackages --additionalProbingPath
+        /root/.nuget/fallbackpackages2 --additionalProbingPath /root/.nuget/fallbackpackages3  "/app/bin/Debug/net5.0/Globomantics.Core.dll"'
+      com.microsoft.visualstudio.debuggee.killprogram: /bin/sh -c "if PID=$$(pidof
+        dotnet); then kill $$PID; fi"
+      com.microsoft.visualstudio.debuggee.program: dotnet
+      com.microsoft.visualstudio.debuggee.workingdirectory: /app
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 5005
+      published: 5005
+      protocol: tcp
+    tty: true
+    volumes:
+    - type: bind
+      source: C:\Users\Jere\source\repos\Globomantics\Globomantics.Core
+      target: /app
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\source\repos\Globomantics
+      target: /src
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\vsdbg\vs2017u5
+      target: /remote_debugger
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\.nuget\packages\
+      target: /root/.nuget/packages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages
+      target: /root/.nuget/fallbackpackages
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files (x86)\Microsoft\Xamarin\NuGet\
+      target: /root/.nuget/fallbackpackages2
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Program Files\dotnet\sdk\NuGetFallbackFolder
+      target: /root/.nuget/fallbackpackages3
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\AppData\Roaming/ASP.NET/Https
+      target: /root/.aspnet/https
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: C:\Users\Jere\AppData\Roaming/Microsoft/UserSecrets
+      target: /root/.microsoft/usersecrets
+      read_only: true
+      bind:
+        create_host_path: true
+  globoseq:
+    environment:
+      ACCEPT_EULA: "Y"
+    image: datalust/seq
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: 5342
+      protocol: tcp
+    restart: unless-stopped
+  globosmtp:
+    image: rnwood/smtp4dev
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: 5010
+      protocol: tcp
+    restart: always
+  globosql:
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Sqlc0nLinux?!
+    image: mcr.microsoft.com/mssql/server
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: 1435
+      protocol: tcp
+    restart: always
+  reverseproxy:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: nginx/nginx.Dockerfile
+    depends_on:
+      globomantics.identityserver:
+        condition: service_started
+    networks:
+      globonet:
+        aliases:
+        - id-local.globomantics.com
+        - www-local.globomantics.com
+    ports:
+    - mode: ingress
+      target: 44395
+      published: 44395
+      protocol: tcp
+networks:
+  globonet:
+    name: dockercompose15693147447272734400_globonet

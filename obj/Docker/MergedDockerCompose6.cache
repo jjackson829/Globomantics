@@ -1,0 +1,98 @@
+services:
+  globomantics.api:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: Globomantics.Api/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://*:5006
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 5006
+      published: 5006
+      protocol: tcp
+  globomantics.identityserver:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: Globomantics.IdentityServer/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://*:5000
+    image: globomanticsidentityserver
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 5000
+      published: 5000
+      protocol: tcp
+  globomantics.ui:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: Globomantics.Core/Dockerfile
+    environment:
+      ASPNETCORE_URLS: http://*:5005
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 5005
+      published: 5005
+      protocol: tcp
+  globoseq:
+    environment:
+      ACCEPT_EULA: "Y"
+    image: datalust/seq
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: 5342
+      protocol: tcp
+    restart: unless-stopped
+  globosmtp:
+    image: rnwood/smtp4dev
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 80
+      published: 5010
+      protocol: tcp
+    restart: always
+  globosql:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: sql/sql.Dockerfile
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: Sqlc0ntainersFTW!
+    networks:
+      globonet: null
+    ports:
+    - mode: ingress
+      target: 1433
+      published: 1440
+      protocol: tcp
+    restart: always
+  reverseproxy:
+    build:
+      context: C:\Users\Jere\source\repos\Globomantics
+      dockerfile: nginx/nginx.Dockerfile
+    depends_on:
+      globomantics.identityserver:
+        condition: service_started
+    networks:
+      globonet:
+        aliases:
+        - id-local.globomantics.com
+        - www-local.globomantics.com
+    ports:
+    - mode: ingress
+      target: 44395
+      published: 44395
+      protocol: tcp
+networks:
+  globonet:
+    name: dockercompose15693147447272734400_globonet
